@@ -2,6 +2,7 @@ package com.springboot.gateway;
 
 import com.springboot.gateway.config.DefaultProfileUtil;
 
+import com.springboot.gateway.filters.pre.SimpleFilter;
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
@@ -35,6 +37,11 @@ public class SpringGatewayApp {
 
     public SpringGatewayApp(Environment env) {
         this.env = env;
+    }
+
+    @Bean
+    public SimpleFilter simpleFilter() {
+        return new SimpleFilter();
     }
 
     /**
