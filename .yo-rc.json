@@ -1,0 +1,35 @@
+{
+  "generator-jhipster": {
+    "jhipsterVersion": "4.0.2",
+    "baseName": "SpringGateway",
+    "packageName": "com.springboot.gateway",
+    "packageFolder": "com/springboot/gateway",
+    "serverPort": "8010",
+    "authenticationType": "jwt",
+    "hibernateCache": "no",
+    "clusteredHttpSession": false,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "elasticsearch",
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "gradle",
+    "enableSocialSignIn": false,
+    "jwtSecretKey": "23562cec5487bf8a64bfb0c2315d75646e27dd42",
+    "useSass": false,
+    "clientPackageManager": "yarn",
+    "applicationType": "gateway",
+    "clientFramework": "angular1",
+    "testFrameworks": [
+      "gatling"
+    ],
+    "jhiPrefix": "jhi",
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": [
+      "en"
+    ]
+  }
+}
