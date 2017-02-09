@@ -40,9 +40,9 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/SpringGateway?useUnicode=true&characterEncoding=utf8&useSSL=false
+        url: jdbc:mysql://192.168.9.24:3306/SpringGateway?useUnicode=true&characterEncoding=utf8&useSSL=false
         username: root
-        password:
+        password: p@ssw0rd
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -96,6 +96,8 @@ server:
 # ===================================================================
 
 jhipster:
+    registry:
+        password: admin
     gateway:
         rate-limiting: # Read the documentation in the GatewayConfiguration class before enabling.
             enabled: false
