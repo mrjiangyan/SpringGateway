@@ -1,8 +1,9 @@
 package com.springboot.gateway;
 
+
 import com.springboot.gateway.config.DefaultProfileUtil;
 
-import com.springboot.gateway.filters.pre.SimpleFilter;
+
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.slf4j.Logger;
@@ -37,12 +38,18 @@ public class SpringGatewayApp {
 
     public SpringGatewayApp(Environment env) {
         this.env = env;
+        //initJavaFilters();
     }
 
     @Bean
-    public SimpleFilter simpleFilter() {
-        return new SimpleFilter();
+    public StartServer executorListener() {
+        return new StartServer();
     }
+
+
+
+
+
 
     /**
      * Initializes SpringGateway.
@@ -62,6 +69,8 @@ public class SpringGatewayApp {
             log.error("You have misconfigured your application! It should not" +
                 "run with both the 'dev' and 'cloud' profiles at the same time.");
         }
+
+
     }
 
     /**
@@ -84,6 +93,8 @@ public class SpringGatewayApp {
             InetAddress.getLocalHost().getHostAddress(),
             env.getProperty("server.port"),
             env.getActiveProfiles());
+
+        //initGroovyFilterManager();
 
         String configServerStatus = env.getProperty("configserver.status");
         log.info("\n----------------------------------------------------------\n\t" +
