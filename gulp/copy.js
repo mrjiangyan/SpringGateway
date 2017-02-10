@@ -6,7 +6,6 @@ var gulp = require('gulp'),
     es = require('event-stream'),
     flatten = require('gulp-flatten'),
     replace = require('gulp-replace'),
-    bowerFiles = require('main-bower-files'),
     changed = require('gulp-changed');
 
 var handleErrors = require('./handle-errors');

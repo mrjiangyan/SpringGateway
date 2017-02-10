@@ -24,7 +24,5 @@ var initTask = lazypipe()
 var jsTask = lazypipe()
     .pipe(ngAnnotate)
     .pipe(uglify);
-var cssTask = lazypipe()
-    .pipe(prefix)
-    .pipe(cssnano);
+
 

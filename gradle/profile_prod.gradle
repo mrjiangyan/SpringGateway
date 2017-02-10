@@ -48,7 +48,7 @@ if (!project.hasProperty('nodeInstall')) {
 } else {
     gulpBuildWithOpts.dependsOn npm_install
 }
-gulpBuildWithOpts.dependsOn bower
+
 processResources.dependsOn gulpBuildWithOpts
 test.dependsOn gulp_test
 bootRun.dependsOn gulp_test

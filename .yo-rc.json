@@ -21,7 +21,6 @@
     "useSass": false,
     "clientPackageManager": "yarn",
     "applicationType": "gateway",
-    "clientFramework": "angular1",
     "testFrameworks": [
       "gatling"
     ],

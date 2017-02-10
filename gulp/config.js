@@ -1,10 +1,8 @@
 'use strict';
 
 module.exports = {
-    app: 'src/main/webapp/',
     dist: 'build/www/',
     test: 'src/test/javascript/',
-    bower: 'src/main/webapp/bower_components/',
     tmp: 'build/tmp',
     revManifest: 'build/tmp/rev-manifest.json',
     port: 9000,
