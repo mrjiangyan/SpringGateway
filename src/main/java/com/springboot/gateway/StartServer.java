@@ -24,11 +24,13 @@ import com.netflix.zuul.filters.FilterRegistry;
 import com.netflix.zuul.groovy.GroovyCompiler;
 import com.netflix.zuul.groovy.GroovyFileFilter;
 import com.netflix.zuul.monitoring.MonitoringHelper;
-import java.io.File;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import java.io.File;
+
 
 public class StartServer implements ServletContextListener {
 
@@ -45,7 +47,7 @@ public class StartServer implements ServletContextListener {
         initGroovyFilterManager();
 
         // initializes a few java filter examples
-        initJavaFilters();
+        //initJavaFilters();
     }
 
     @Override
@@ -58,6 +60,7 @@ public class StartServer implements ServletContextListener {
 
         String scriptRoot = System.getProperty("zuul.filter.root",  "src/main/groovy/filters");
         if (scriptRoot.length() > 0) scriptRoot = scriptRoot + File.separator;
+
         try {
             FilterFileManager.setFilenameFilter(new GroovyFileFilter());
             FilterFileManager.init(5, scriptRoot + "pre", scriptRoot + "route", scriptRoot + "post");
@@ -65,6 +68,8 @@ public class StartServer implements ServletContextListener {
             throw new RuntimeException(e);
         }
     }
+
+
 
     private void initJavaFilters() {
         final FilterRegistry r = FilterRegistry.instance();

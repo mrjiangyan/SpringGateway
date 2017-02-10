@@ -42,7 +42,7 @@ class DebugFilter extends ZuulFilter {
             return true
         }
 
-        return routingDebug.get();
+        return routingDebug.get()
     }
 
     Object run() {

@@ -60,7 +60,11 @@
         <resetJUL>true</resetJUL>
     </contextListener>
 
-    <root level="#logback.loglevel#">
+  <!--  <root level="#logback.loglevel#">
+        <appender-ref ref="CONSOLE"/>
+    </root>-->
+
+    <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
     </root>
 

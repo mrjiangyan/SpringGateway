@@ -10,11 +10,11 @@ import java.util.Set;
 public class TokenRelayFilter extends ZuulFilter {
     @Override
     public Object run() {
-        RequestContext ctx = RequestContext.getCurrentContext();
-
-        Set<String> headers = (Set<String>) ctx.get("ignoredHeaders");
-        // We need our JWT tokens relayed to resource servers
-        headers.remove("authorization");
+//        RequestContext ctx = RequestContext.getCurrentContext();
+//
+//        Set<String> headers = (Set<String>) ctx.get("ignoredHeaders");
+//        // We need our JWT tokens relayed to resource servers
+//        headers.remove("authorization");
 
         return null;
     }

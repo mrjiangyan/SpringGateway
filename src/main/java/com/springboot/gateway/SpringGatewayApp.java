@@ -1,5 +1,7 @@
 package com.springboot.gateway;
 
+import com.netflix.zuul.context.ContextLifecycleFilter;
+import com.netflix.zuul.http.ZuulServlet;
 import com.springboot.gateway.config.DefaultProfileUtil;
 
 import io.github.jhipster.config.JHipsterConstants;
@@ -9,7 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.*;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
@@ -28,6 +33,7 @@ import java.util.Collection;
 @EnableConfigurationProperties(LiquibaseProperties.class)
 @EnableDiscoveryClient
 @EnableZuulProxy
+@SpringBootApplication
 public class SpringGatewayApp {
 
     private static final Logger log = LoggerFactory.getLogger(SpringGatewayApp.class);
@@ -42,6 +48,7 @@ public class SpringGatewayApp {
     public StartServer executorListener() {
         return new StartServer();
     }
+
 
 
     /**
@@ -89,5 +96,19 @@ public class SpringGatewayApp {
         log.info("\n----------------------------------------------------------\n\t" +
                 "Config Server: \t{}\n----------------------------------------------------------",
             configServerStatus == null ? "Not found or not setup for this application" : configServerStatus);
+    }
+
+    @Bean
+    public ServletRegistrationBean zuulServlet() {
+        ServletRegistrationBean servlet = new ServletRegistrationBean(new ZuulServlet());
+        servlet.addUrlMappings("/*");
+        return servlet;
+    }
+
+    @Bean
+    public FilterRegistrationBean contextLifecycleFilter() {
+        FilterRegistrationBean filter = new FilterRegistrationBean(new ContextLifecycleFilter());
+        filter.addUrlPatterns("/*");
+        return filter;
     }
 }
