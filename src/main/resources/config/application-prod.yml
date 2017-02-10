@@ -64,13 +64,7 @@ spring:
         elasticsearch:
             cluster-name:
             cluster-nodes: localhost:9300
-    mail:
-        host: localhost
-        port: 25
-        username:
-        password:
-    thymeleaf:
-        cache: true
+
 
 liquibase:
     contexts: prod
@@ -100,13 +94,11 @@ jhipster:
     security:
         authentication:
             jwt:
-                secret: 23562cec5487bf8a64bfb0c2315d75646e27dd42
+                secret: 0d314e415ad2924ab35d5ed29cae8758c191ba47
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
-    mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: SpringGateway@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
+
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         graphite:

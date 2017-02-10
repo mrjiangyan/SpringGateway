@@ -24,13 +24,13 @@ buildscript {
 apply plugin: 'java'
 sourceCompatibility=1.8
 targetCompatibility=1.8
-apply plugin: 'maven'
+apply plugin: 'jetty'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'war'
 apply plugin: 'propdeps'
 apply plugin: 'com.moowork.node'
 apply plugin: 'com.moowork.gulp'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'groovy'
 dependencyManagement {
   imports {
     mavenBom 'org.springframework.cloud:spring-cloud-dependencies:' + spring_cloud_version
@@ -42,9 +42,7 @@ bootRepackage {
    mainClass = 'com.springboot.gateway.SpringGatewayApp'
 }
 
-war {
 
-}
 
 springBoot {
     mainClass = 'com.springboot.gateway.SpringGatewayApp'
@@ -71,6 +69,7 @@ if (OperatingSystem.current().isWindows()) {
         dependsOn pathingJar
         doFirst {
             classpath = files("$buildDir/classes/main", "$buildDir/resources/main", pathingJar.archivePath)
+            System.setProperty("zuul.filter.root", "src/main/groovy/filters")
         }
     }
 } else {
@@ -179,7 +178,6 @@ dependencies {
     compile "commons-io:commons-io:${commons_io_version}"
     compile "javax.transaction:javax.transaction-api"
     compile "net.jpountz.lz4:lz4:${lz4_version}"
-    compile "org.apache.geronimo.javamail:geronimo-javamail_1.4_mail:${geronimo_javamail_1_4_mail_version}"
     compile "org.hibernate:hibernate-envers"
     compile "org.hibernate:hibernate-validator:${hibernate_validator_version}"
     compile ("org.liquibase:liquibase-core:${liquibase_core_version}") {
@@ -201,7 +199,6 @@ dependencies {
         exclude module: 'spring-boot-starter-tomcat'
     }
     compile "org.springframework.boot:spring-boot-starter-undertow"
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
     compile ("com.datastax.cassandra:cassandra-driver-core:${datastax_driver_version}") {
         exclude module: 'com.codahale.metrics'
     }
@@ -224,11 +221,9 @@ dependencies {
     compile "org.springframework.security:spring-security-data"
     compile "org.springframework.security:spring-security-web"
     compile "io.jsonwebtoken:jjwt:${jjwt_version}"
-    compile ("io.springfox:springfox-swagger2:${springfox_version}") {
-        exclude module: 'mapstruct'
-    }
     compile "io.springfox:springfox-bean-validators:${springfox_version}"
     compile "mysql:mysql-connector-java"
+    compile "com.h2database:h2"
     compile "org.mapstruct:mapstruct-jdk8:${mapstruct_version}"
     testCompile "com.jayway.awaitility:awaitility:${awaility_version}"
     testCompile "com.jayway.jsonpath:json-path"
@@ -241,7 +236,6 @@ dependencies {
     testCompile "com.mattbertolini:liquibase-slf4j:${liquibase_slf4j_version}"
     testCompile "org.hamcrest:hamcrest-library"
     testCompile "io.gatling.highcharts:gatling-charts-highcharts:${gatling_version}"
-    testCompile "com.h2database:h2"
     optional "org.springframework.boot:spring-boot-configuration-processor:${spring_boot_version}"
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }

@@ -10,14 +10,14 @@
     "clusteredHttpSession": false,
     "websocket": false,
     "databaseType": "sql",
-    "devDatabaseType": "mysql",
+    "devDatabaseType": "h2Memory",
     "prodDatabaseType": "mysql",
     "searchEngine": "elasticsearch",
     "messageBroker": false,
     "serviceDiscoveryType": "eureka",
     "buildTool": "gradle",
     "enableSocialSignIn": false,
-    "jwtSecretKey": "23562cec5487bf8a64bfb0c2315d75646e27dd42",
+    "jwtSecretKey": "0d314e415ad2924ab35d5ed29cae8758c191ba47",
     "useSass": false,
     "clientPackageManager": "yarn",
     "applicationType": "gateway",
@@ -26,10 +26,6 @@
       "gatling"
     ],
     "jhiPrefix": "jhi",
-    "enableTranslation": true,
-    "nativeLanguage": "en",
-    "languages": [
-      "en"
-    ]
+    "enableTranslation": false
   }
 }

@@ -65,13 +65,11 @@ spring:
                 path:
                   logs: target/elasticsearch/log
                   data: target/elasticsearch/data
-    mail:
-        host: localhost
+
     mvc:
         favicon:
             enabled: false
-    thymeleaf:
-        mode: XHTML
+
 
 liquibase:
     contexts: test
@@ -98,7 +96,7 @@ jhipster:
     security:
         authentication:
             jwt:
-                secret: 23562cec5487bf8a64bfb0c2315d75646e27dd42
+                secret: 0d314e415ad2924ab35d5ed29cae8758c191ba47
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration

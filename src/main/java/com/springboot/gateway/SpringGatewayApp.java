@@ -37,6 +37,11 @@ public class SpringGatewayApp {
         this.env = env;
     }
 
+    public StartServer executorListener() {
+        return new StartServer();
+    }
+
+
     /**
      * Initializes SpringGateway.
      * <p>

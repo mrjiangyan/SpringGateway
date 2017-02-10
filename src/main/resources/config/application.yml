@@ -40,8 +40,7 @@ hystrix:
 management:
     context-path: /management
     health:
-        mail:
-            enabled: false # When using the MailService, configure an SMTP server and set this to true
+
 spring:
     application:
         name: SpringGateway
@@ -54,13 +53,10 @@ spring:
             naming:
                 physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-    messages:
-        basename: i18n/messages
     mvc:
         favicon:
             enabled: false
-    thymeleaf:
-        mode: XHTML
+
 
 security:
     basic:
@@ -90,19 +86,7 @@ jhipster:
         #exposed-headers:
         #allow-credentials: true
         #max-age: 1800
-    mail:
-        from: SpringGateway@localhost
-    swagger:
-        default-include-pattern: /api/.*
-        title: SpringGateway API
-        description: SpringGateway API documentation
-        version: 0.0.1
-        terms-of-service-url:
-        contact-name:
-        contact-url:
-        contact-email:
-        license:
-        license-url:
+
     ribbon:
         display-on-active-profiles: dev
 

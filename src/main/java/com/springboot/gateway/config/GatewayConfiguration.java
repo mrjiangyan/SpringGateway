@@ -5,7 +5,6 @@ import io.github.jhipster.config.JHipsterProperties;
 import com.springboot.gateway.gateway.ratelimiting.RateLimitingFilter;
 import com.springboot.gateway.gateway.ratelimiting.RateLimitingRepository;
 import com.springboot.gateway.gateway.accesscontrol.AccessControlFilter;
-import com.springboot.gateway.gateway.responserewriting.SwaggerBasePathRewritingFilter;
 
 import com.datastax.driver.core.*;
 
@@ -17,14 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GatewayConfiguration {
 
-    @Configuration
-    public static class SwaggerBasePathRewritingConfiguration {
 
-        @Bean
-        public SwaggerBasePathRewritingFilter swaggerBasePathRewritingFilter(){
-            return new SwaggerBasePathRewritingFilter();
-        }
-    }
 
     @Configuration
     public static class AccessControlFilterConfiguration {

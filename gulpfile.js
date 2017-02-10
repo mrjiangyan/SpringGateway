@@ -1,4 +1,4 @@
-// Generated on 2017-02-09 using generator-jhipster 4.0.2
+// Generated on 2017-02-10 using generator-jhipster 4.0.2
 'use strict';
 
 var gulp = require('gulp'),
@@ -30,40 +30,11 @@ gulp.task('clean', function () {
     return del([config.dist], { dot: true });
 });
 
-gulp.task('copy', ['copy:i18n', 'copy:fonts', 'copy:common']);
+gulp.task('copy', ['copy:fonts', 'copy:common']);
 
-gulp.task('copy:i18n', copy.i18n);
-
-gulp.task('copy:languages', copy.languages);
-
-gulp.task('copy:fonts', copy.fonts);
 
 gulp.task('copy:common', copy.common);
 
-gulp.task('copy:swagger', copy.swagger);
-
-gulp.task('copy:images', copy.images);
-
-gulp.task('images', function () {
-    return gulp.src(config.app + 'content/images/**')
-        .pipe(plumber({errorHandler: handleErrors}))
-        .pipe(changed(config.dist + 'content/images'))
-        .pipe(imagemin({optimizationLevel: 5, progressive: true, interlaced: true}))
-        .pipe(rev())
-        .pipe(gulp.dest(config.dist + 'content/images'))
-        .pipe(rev.manifest(config.revManifest, {
-            base: config.dist,
-            merge: true
-        }))
-        .pipe(gulp.dest(config.dist))
-        .pipe(browserSync.reload({stream: true}));
-});
-
-
-gulp.task('styles', [], function () {
-    return gulp.src(config.app + 'content/css')
-        .pipe(browserSync.reload({stream: true}));
-});
 
 gulp.task('inject', function() {
     runSequence('inject:dep', 'inject:app');
@@ -79,18 +50,7 @@ gulp.task('inject:test', inject.test);
 
 gulp.task('inject:troubleshoot', inject.troubleshoot);
 
-gulp.task('assets:prod', ['images', 'styles', 'html', 'copy:swagger', 'copy:images'], build);
 
-gulp.task('html', function () {
-    return gulp.src(config.app + 'app/**/*.html')
-        .pipe(htmlmin({collapseWhitespace: true}))
-        .pipe(templateCache({
-            module: 'springGatewayApp',
-            root: 'app/',
-            moduleSystem: 'IIFE'
-        }))
-        .pipe(gulp.dest(config.tmp));
-});
 
 gulp.task('ngconstant:dev', function () {
     return ngConstant({
@@ -158,13 +118,13 @@ gulp.task('watch', function () {
 });
 
 gulp.task('install', function () {
-    runSequence(['inject:dep', 'ngconstant:dev'], 'copy:languages', 'inject:app', 'inject:troubleshoot');
+    runSequence(['inject:dep', 'ngconstant:dev'], 'inject:app', 'inject:troubleshoot');
 });
 
 gulp.task('serve', ['install'], serve);
 
 gulp.task('build', ['clean'], function (cb) {
-    runSequence(['copy', 'inject:vendor', 'ngconstant:prod', 'copy:languages'], 'inject:app', 'inject:troubleshoot', 'assets:prod', cb);
+    runSequence(['copy', 'inject:vendor', 'ngconstant:prod'], 'inject:app', 'inject:troubleshoot', 'assets:prod', cb);
 });
 
 gulp.task('default', ['serve']);

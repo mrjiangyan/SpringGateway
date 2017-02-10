@@ -26,9 +26,7 @@ eureka:
             defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
 
 spring:
-    profiles:
-        active: dev
-        include: swagger
+
     autoconfigure:
         exclude: org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration
     devtools:
@@ -40,18 +38,15 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://192.168.9.24:3306/SpringGateway?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: root
-        password: p@ssw0rd
-        hikari:
-            data-source-properties:
-                cachePrepStmts: true
-                prepStmtCacheSize: 250
-                prepStmtCacheSqlLimit: 2048
-                useServerPrepStmts: true
+        url: jdbc:h2:mem:springgateway;DB_CLOSE_DELAY=-1
+        username: SpringGateway
+        password:
+    h2:
+        console:
+            enabled: false
     jpa:
-        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-        database: MYSQL
+        database-platform: io.github.jhipster.domain.util.FixedH2Dialect
+        database: H2
         show-sql: true
         properties:
             hibernate.id.new_generator_mappings: true
@@ -73,15 +68,6 @@ spring:
                 path:
                   logs: target/elasticsearch/log
                   data: target/elasticsearch/data
-    mail:
-        host: localhost
-        port: 25
-        username:
-        password:
-    messages:
-        cache-seconds: 1
-    thymeleaf:
-        cache: false
 
 liquibase:
     contexts: dev
@@ -96,8 +82,6 @@ server:
 # ===================================================================
 
 jhipster:
-    registry:
-        password: admin
     gateway:
         rate-limiting: # Read the documentation in the GatewayConfiguration class before enabling.
             enabled: false
@@ -110,9 +94,6 @@ jhipster:
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
-    mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: SpringGateway@localhost
-        base-url: http://127.0.0.1:8010
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         graphite: # Use the "graphite" Maven profile to have the Graphite dependencies
@@ -135,7 +116,8 @@ jhipster:
         spectator-metrics: # Reports Spectator Circuit Breaker metrics in the logs
             enabled: false
             # edit spring.metrics.export.delay-millis to set report frequency
-
+    registry:
+      password: admin
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
