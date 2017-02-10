@@ -65,13 +65,11 @@ spring:
                 path:
                   logs: target/elasticsearch/log
                   data: target/elasticsearch/data
-    mail:
-        host: localhost
+
     mvc:
         favicon:
             enabled: false
-    thymeleaf:
-        mode: XHTML
+
 
 liquibase:
     contexts: test

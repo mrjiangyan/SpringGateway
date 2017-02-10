@@ -3,7 +3,6 @@
 describe('Controller Tests', function() {
 
     beforeEach(mockApiAccountCall);
-    beforeEach(mockI18nCalls);
 
     describe('SettingsController', function() {
 

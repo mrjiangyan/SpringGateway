@@ -199,7 +199,6 @@ dependencies {
         exclude module: 'spring-boot-starter-tomcat'
     }
     compile "org.springframework.boot:spring-boot-starter-undertow"
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
     compile ("com.datastax.cassandra:cassandra-driver-core:${datastax_driver_version}") {
         exclude module: 'com.codahale.metrics'
     }
