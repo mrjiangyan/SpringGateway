@@ -24,12 +24,13 @@ buildscript {
 apply plugin: 'java'
 sourceCompatibility=1.8
 targetCompatibility=1.8
-apply plugin: 'maven'
+apply plugin: 'jetty'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'propdeps'
 apply plugin: 'com.moowork.node'
 apply plugin: 'com.moowork.gulp'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'groovy'
 dependencyManagement {
   imports {
     mavenBom 'org.springframework.cloud:spring-cloud-dependencies:' + spring_cloud_version
@@ -68,6 +69,7 @@ if (OperatingSystem.current().isWindows()) {
         dependsOn pathingJar
         doFirst {
             classpath = files("$buildDir/classes/main", "$buildDir/resources/main", pathingJar.archivePath)
+            System.setProperty("zuul.filter.root", "src/main/groovy/filters")
         }
     }
 } else {
