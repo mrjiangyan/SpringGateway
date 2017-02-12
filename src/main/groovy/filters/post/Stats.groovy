@@ -45,9 +45,9 @@ class Stats extends ZuulFilter {
     }
 
     public void dumpRequestDebug() {
-        List<String> rd = (List<String>) RequestContext.getCurrentContext().get("requestDebug");
+        List<String> rd = (List<String>) RequestContext.getCurrentContext().get("requestDebug")
         rd?.each {
-            println("REQUEST_DEBUG::${it}");
+            println("REQUEST_DEBUG::${it}")
         }
     }
 

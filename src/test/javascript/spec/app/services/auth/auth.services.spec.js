@@ -25,8 +25,6 @@ describe('Service Tests', function () {
             //Set spy
             spyOn(spiedAuthServerProvider, 'logout').and.callThrough();
 
-            //WHEN
-            authService.logout();
             //flush the backend to "execute" the request to do the expectedGET assertion.
             $httpBackend.flush();
 

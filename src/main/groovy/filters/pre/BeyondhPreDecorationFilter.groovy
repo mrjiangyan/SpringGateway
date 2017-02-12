@@ -21,7 +21,7 @@ import com.netflix.zuul.context.RequestContext
 /**
  * @author mhawthorne
  */
-class PreDecorationFilter extends ZuulFilter {
+class BeyondhPreDecorationFilter extends ZuulFilter {
 
     @Override
     int filterOrder() {
@@ -41,12 +41,13 @@ class PreDecorationFilter extends ZuulFilter {
     @Override
     Object run() {
         RequestContext ctx = RequestContext.getCurrentContext()
-
+        ctx.setDebugRouting(true)
+        //ctx.setResponseBody("123456")
         // sets origin
         //ctx.setRouteHost(new URL("http://httpbin.org"));
-        ctx.setRouteHost(new URL("http://www.beyondh.com"));
+        //ctx.setRouteHost(new URL("http://www.beyondh.com"));
         // sets custom header to send to the origin
-        ctx.addOriginResponseHeader("cache-control", "max-age=3600");
+        //ctx.addOriginResponseHeader("cache-control", "max-age=3600");
     }
 
 }

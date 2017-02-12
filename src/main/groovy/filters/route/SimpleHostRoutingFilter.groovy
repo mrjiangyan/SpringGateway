@@ -178,7 +178,7 @@ class SimpleHostRoutingFilter extends ZuulFilter {
             Debug.addRequestDebug("ZUUL :: Response code > ${response.getStatusLine().statusCode}")
             setResponse(response)
         } catch (Exception e) {
-            throw e;
+            throw e
         }
         return null
     }

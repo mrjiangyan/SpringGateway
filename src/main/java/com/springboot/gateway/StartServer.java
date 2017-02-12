@@ -24,12 +24,11 @@ import com.netflix.zuul.filters.FilterRegistry;
 import com.netflix.zuul.groovy.GroovyCompiler;
 import com.netflix.zuul.groovy.GroovyFileFilter;
 import com.netflix.zuul.monitoring.MonitoringHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import java.io.File;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.io.File;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class StartServer implements ServletContextListener {
@@ -47,7 +46,7 @@ public class StartServer implements ServletContextListener {
         initGroovyFilterManager();
 
         // initializes a few java filter examples
-        //initJavaFilters();
+        initJavaFilters();
     }
 
     @Override

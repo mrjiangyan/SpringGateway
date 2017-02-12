@@ -1,5 +1,10 @@
 package com.springboot.gateway.config;
 
+import com.netflix.zuul.FilterFileManager;
+import com.netflix.zuul.FilterLoader;
+import com.netflix.zuul.groovy.GroovyCompiler;
+import com.netflix.zuul.groovy.GroovyFileFilter;
+import com.netflix.zuul.monitoring.MonitoringHelper;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.web.filter.CachingHttpHeadersFilter;
@@ -45,6 +50,23 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         this.jHipsterProperties = jHipsterProperties;
     }
 
+    private void initGroovyFilterManager() {
+        FilterLoader.getInstance().setCompiler(new GroovyCompiler());
+
+        String scriptRoot = System.getProperty("zuul.filter.root",  "src/main/groovy/filters");
+        if (scriptRoot.length() > 0) scriptRoot = scriptRoot + File.separator;
+
+        try {
+            FilterFileManager.setFilenameFilter(new GroovyFileFilter());
+            FilterFileManager.init(5, scriptRoot + "pre", scriptRoot + "route", scriptRoot + "post");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         if (env.getActiveProfiles().length != 0) {
@@ -58,6 +80,11 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
             initH2Console(servletContext);
         }
+        // mocks monitoring infrastructure as we don't need it for this simple app
+        //MonitoringHelper.initMocks();
+
+        // initializes groovy filesystem poller
+        //initGroovyFilterManager();
         log.info("Web application fully configured");
     }
 

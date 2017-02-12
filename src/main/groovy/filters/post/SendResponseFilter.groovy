@@ -80,13 +80,13 @@ class SendResponseFilter extends ZuulFilter {
             if (RequestContext.getCurrentContext().responseBody != null) {
                 String body = RequestContext.getCurrentContext().responseBody
                 writeResponse(new ByteArrayInputStream(body.getBytes(Charset.forName("UTF-8"))), outStream)
-                return;
+                return
             }
 
             boolean isGzipRequested = false
             final String requestEncoding = context.getRequest().getHeader(ZuulHeaders.ACCEPT_ENCODING)
             if (requestEncoding != null && requestEncoding.equals("gzip"))
-                isGzipRequested = true;
+                isGzipRequested = true
 
             is = context.getResponseDataStream();
             InputStream inputStream = is

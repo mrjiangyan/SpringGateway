@@ -32,32 +32,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    private final UserDetailsService userDetailsService;
-
     private final TokenProvider tokenProvider;
 
     private final CorsFilter corsFilter;
 
-    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService,
+    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder,
             TokenProvider tokenProvider,
         CorsFilter corsFilter) {
 
         this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.userDetailsService = userDetailsService;
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
     }
 
-    @PostConstruct
-    public void init() {
-        try {
-            authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
-                    .passwordEncoder(passwordEncoder());
-        } catch (Exception e) {
-            throw new BeanInitializationException("Security configuration failed", e);
-        }
-    }
+
 
     @Bean
     public Http401UnauthorizedEntryPoint http401UnauthorizedEntryPoint() {
@@ -69,18 +57,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/app/**/*.{js,html}")
-            .antMatchers("/bower_components/**")
-            .antMatchers("/i18n/**")
-            .antMatchers("/content/**")
-            .antMatchers("/swagger-ui/index.html")
-            .antMatchers("/test/**")
-            .antMatchers("/h2-console/**");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring()
+//            .antMatchers(HttpMethod.OPTIONS, "/**")
+//            .antMatchers("/app/**/*.{js,html}")
+//            .antMatchers("/bower_components/**")
+//            .antMatchers("/i18n/**")
+//            .antMatchers("/content/**")
+//            .antMatchers("/swagger-ui/index.html")
+//            .antMatchers("/test/**")
+//            .antMatchers("/h2-console/**");
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -97,9 +85,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-            .authorizeRequests()
-            .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
+//        .and()
+//            .authorizeRequests()
+//            .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
         .and()
             .apply(securityConfigurerAdapter());
 
