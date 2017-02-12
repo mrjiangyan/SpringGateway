@@ -1,0 +1,59 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id 'nebula.netflixoss' version '3.4.0'
+    id 'nebula.provided-base' version '3.1.0'
+}
+
+
+
+ext.githubProjectName = rootProject.name
+
+idea {
+    project {
+        languageLevel = '1.8'
+    }
+}
+
+configurations.all {
+    // Exclude old asm 3.x versions.
+    exclude group: 'asm', module: 'asm'
+    exclude group: 'asm', module: 'asm-all'
+}
+
+subprojects {
+    apply plugin: 'nebula.netflixoss'
+    apply plugin: 'java'
+    apply plugin: 'nebula.provided-base'
+
+    repositories {
+        jcenter()
+    }
+
+    group = "com.netflix.${githubProjectName}"
+    
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+
+    sourceSets.test.java.srcDir 'src/main/java'
+
+//    tasks.withType(Javadoc).each {
+//        it.classpath = sourceSets.main.compileClasspath
+//    }
+
+    test {
+        forkEvery = 1
+        maxParallelForks = 1
+    }
+}
