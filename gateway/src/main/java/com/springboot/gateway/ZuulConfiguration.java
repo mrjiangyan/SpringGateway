@@ -38,17 +38,6 @@ public class ZuulConfiguration {
     }
 
 
-//    @Bean
-//    public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
-//        log.info("starting dispatcherRegistration");
-//
-//        ServletRegistrationBean registration = new ServletRegistrationBean(dispatcherServlet);
-//        registration.getUrlMappings().clear();
-//        registration.addUrlMappings("*.do");
-//        registration.addUrlMappings("*.json");
-//        return registration;
-//    }
-
 
 
 }
