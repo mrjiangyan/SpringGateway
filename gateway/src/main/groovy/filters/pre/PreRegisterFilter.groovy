@@ -16,14 +16,13 @@
 package filters.pre
 
 import com.netflix.zuul.ZuulFilter
-import com.netflix.zuul.context.Debug
 import com.netflix.zuul.context.RequestContext
 import org.apache.http.util.TextUtils
 
 /**
  * @author mhawthorne
  */
-class PreDecorationFilter extends ZuulFilter {
+class PreRegisterFilter extends ZuulFilter {
 
     @Override
     int filterOrder() {
@@ -38,27 +37,18 @@ class PreDecorationFilter extends ZuulFilter {
     @Override
     boolean shouldFilter() {
         if (TextUtils.isEmpty(RequestContext.getCurrentContext().getRequest().getHeader("OwnerId"))) {
-            return false
+            return true
         }
-        return true
+        return false
     }
 
     @Override
     Object run() {
+
         RequestContext ctx = RequestContext.getCurrentContext()
-        if(ctx.getRequest().getHeader("OrgId").equals("123456"))
-        {
-            ctx.setRouteHost(new URL("http://testebapi.51pms.net:8001/"))
-        }
-        else
-        {
-// sets origin
-            ctx.setRouteHost(new URL("http://ebapi.51pms.net:8001/"))
-        }
-
-
+        ctx.setRouteHost(new URL("http://www.beyondh.com"))
         // sets custom header to send to the origin
-        ctx.addOriginResponseHeader("cache-control", "max-age=3600");
+        ctx.addOriginResponseHeader("Action", "Register")
     }
 
 }
