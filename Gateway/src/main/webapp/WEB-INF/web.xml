@@ -5,7 +5,7 @@
          version="2.5">
   
     <listener>
-        <listener-class>com.netflix.zuul.StartServer</listener-class>
+        <listener-class>com.springboot.gateway.StartServer</listener-class>
     </listener>
 
     <servlet>

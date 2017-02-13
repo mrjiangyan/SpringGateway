@@ -49,7 +49,7 @@ class DebugFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext()
         ctx.setDebugRouting(true)
         ctx.setDebugRequest(true)
-        return null;
+        return null
     }
 
 

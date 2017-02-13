@@ -16,6 +16,7 @@
 package filters.pre
 
 import com.netflix.zuul.ZuulFilter
+import com.netflix.zuul.context.Debug
 import com.netflix.zuul.context.RequestContext
 
 /**
@@ -35,12 +36,18 @@ class PreDecorationFilter extends ZuulFilter {
 
     @Override
     boolean shouldFilter() {
-        return true;
+        return true
     }
 
     @Override
     Object run() {
         RequestContext ctx = RequestContext.getCurrentContext()
+        Map<String, String> headers= ctx.getZuulRequestHeaders()
+        for(String key:headers.keySet())
+        {
+            Debug.addRequestDebug("KEY:: " + key + " " +  "VALUE:" + headers.get(key))
+
+        }
 
         // sets origin
         ctx.setRouteHost(new URL("http://httpbin.org"));
