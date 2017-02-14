@@ -16,7 +16,6 @@
 package filters.pre
 
 import com.netflix.zuul.ZuulFilter
-import com.netflix.zuul.context.Debug
 import com.netflix.zuul.context.RequestContext
 import org.apache.http.util.TextUtils
 
@@ -46,16 +45,12 @@ class PreDecorationFilter extends ZuulFilter {
     @Override
     Object run() {
         RequestContext ctx = RequestContext.getCurrentContext()
-        if(ctx.getRequest().getHeader("OrgId").equals("123456"))
-        {
+        if (ctx.getRequest().getHeader("OrgId").equals("123456")) {
             ctx.setRouteHost(new URL("http://testebapi.51pms.net:8001/"))
-        }
-        else
-        {
+        } else {
 // sets origin
             ctx.setRouteHost(new URL("http://ebapi.51pms.net:8001/"))
         }
-
 
         // sets custom header to send to the origin
         ctx.addOriginResponseHeader("cache-control", "max-age=3600");

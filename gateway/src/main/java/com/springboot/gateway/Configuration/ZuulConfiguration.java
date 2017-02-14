@@ -1,16 +1,13 @@
-package com.springboot.gateway;
+package com.springboot.gateway.Configuration;
 
 import com.netflix.zuul.context.ContextLifecycleFilter;
 import com.netflix.zuul.http.ZuulServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.embedded.undertow.UndertowDeploymentInfoCustomizer;
-import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.DispatcherServlet;
 
 @Configuration
 public class ZuulConfiguration {
@@ -23,9 +20,9 @@ public class ZuulConfiguration {
         ServletRegistrationBean servlet = new ServletRegistrationBean(new ZuulServlet());
         servlet.addUrlMappings("/api/*");
         //servlet.addUrlMappings("/*");
-        servlet.addInitParameter("buffer-requests","true");
+        servlet.addInitParameter("buffer-requests", "true");
         servlet.setAsyncSupported(true);
-       // servlet.setLoadOnStartup(1);
+        // servlet.setLoadOnStartup(1);
         return servlet;
     }
 
@@ -36,8 +33,6 @@ public class ZuulConfiguration {
         filter.addUrlPatterns("/api/*");
         return filter;
     }
-
-
 
 
 }

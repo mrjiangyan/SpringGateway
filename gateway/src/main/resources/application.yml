@@ -1,0 +1,12 @@
+spring:
+    datasource:
+        name: test
+        url: jdbc:mysql://192.168.9.24:3306/SpringGateway?verifyServerCertificate=false&useSSL=false&requireSSL=false
+        username: root
+        password: p@ssw0rd
+        driver-class-name: com.mysql.jdbc.Driver
+
+
+#mybatis:
+#  mapperLocations: classpath:mapper/*.xml
+#  typeAliasesPackage: com.spring.gateway.persistent
