@@ -49,6 +49,21 @@ public class GroovyScript {
     private String script_name;
 
 
+    public boolean isActive() {
+        return is_active;
+    }
+
+    public void setIsActive(boolean is_active) {
+        this.is_active = is_active;
+
+    }
+
+    public String getHashCode() {
+        return hash_code;
+    }
+
+
+
     private boolean is_active;
 
     private String hash_code;

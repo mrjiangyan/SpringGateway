@@ -11,6 +11,6 @@ import org.springframework.context.annotation.Bean;
  */
 @Mapper
 public interface GroovyScriptMapper {
-    @Select("select * from groovy_script")
+    @Select("select * from groovy_script where is_active=1")
     GroovyScript[] getAll();
 }

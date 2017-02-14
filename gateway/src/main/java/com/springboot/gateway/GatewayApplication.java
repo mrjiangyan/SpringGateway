@@ -42,31 +42,6 @@ public class GatewayApplication {
     private static final Logger log = LoggerFactory.getLogger(GatewayApplication.class);
 
 
-    //DataSource配置
-    @Bean
-    @ConfigurationProperties(prefix="spring.datasource")
-    public DataSource dataSource() {
-        return new org.apache.tomcat.jdbc.pool.DataSource();
-    }
-
-    //提供SqlSeesion
-//    @Bean
-//    public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
-//
-//        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-//        sqlSessionFactoryBean.setDataSource(dataSource());
-//
-//        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-//
-//        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mybatis/*.xml"));
-//
-//        return sqlSessionFactoryBean.getObject();
-//    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager() {
-        return new DataSourceTransactionManager(dataSource());
-    }
 
     /**
      * Main method, used to run the application.
@@ -125,11 +100,11 @@ public class GatewayApplication {
             instance.setCompiler(new GroovyCompiler());
             for(GroovyScript script :scriptMapper.getAll())
             {
-                log.info(script.getScript());
-                File temp = null;
+                File temp =null ;
+
                 try {
-                    temp = File.createTempFile(script.getScriptName(), ".groovy");
-                    log.debug(temp.getAbsolutePath());
+                    temp = new File(script.getScriptName()+".groovy");
+                    log.info(temp.getAbsolutePath());
                     //在程序退出时删除临时文件
                     temp.deleteOnExit();
                     // 向临时文件中写入内容
