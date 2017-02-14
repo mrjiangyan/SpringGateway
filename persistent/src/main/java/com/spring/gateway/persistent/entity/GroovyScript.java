@@ -48,6 +48,16 @@ public class GroovyScript {
 
     private String script_name;
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    private String type;
+
 
     public boolean isActive() {
         return is_active;

@@ -16,7 +16,6 @@ public class ZuulConfiguration {
 
     @Bean
     public ServletRegistrationBean getZuulServlet() {
-        log.info("starting ZuulServlet");
         ServletRegistrationBean servlet = new ServletRegistrationBean(new ZuulServlet());
         servlet.addUrlMappings("/api/*");
         //servlet.addUrlMappings("/*");
@@ -28,7 +27,6 @@ public class ZuulConfiguration {
 
     @Bean
     public FilterRegistrationBean contextLifecycleFilter() {
-        log.info("starting contextLifecycleFilter");
         FilterRegistrationBean filter = new FilterRegistrationBean(new ContextLifecycleFilter());
         filter.addUrlPatterns("/api/*");
         return filter;

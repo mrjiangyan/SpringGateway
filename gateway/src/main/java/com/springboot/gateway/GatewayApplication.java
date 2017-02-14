@@ -98,12 +98,16 @@ public class GatewayApplication {
         private void initGroovyFilterManagerFromDB() {
             FilterLoader instance= FilterLoader.getInstance();
             instance.setCompiler(new GroovyCompiler());
+            String scriptRoot="";
+            File root=new File("script");
+            if(!root.exists())
+                root.mkdir();
+            scriptRoot=root.getName()+File.separator;
+
             for(GroovyScript script :scriptMapper.getAll())
             {
-                File temp =null ;
-
                 try {
-                    temp = new File(script.getScriptName()+".groovy");
+                    File temp = new File(scriptRoot,script.getScriptName()+".groovy");
                     log.info(temp.getAbsolutePath());
                     //在程序退出时删除临时文件
                     temp.deleteOnExit();
@@ -116,6 +120,15 @@ public class GatewayApplication {
                     e.printStackTrace();
                 }
             }
+            if (scriptRoot.length() > 0) scriptRoot = scriptRoot + File.separator;
+            try {
+                FilterFileManager.setFilenameFilter(new GroovyFileFilter());
+                FilterFileManager.init(20, scriptRoot);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            //启动一个线程去动态的刷新文件
 
         }
 
