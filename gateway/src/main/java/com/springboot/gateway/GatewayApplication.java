@@ -31,16 +31,16 @@ import java.net.UnknownHostException;
 //@EnableZuulProxy
 @ComponentScan
 @Configuration
-public class GatewayApplication  extends SpringBootServletInitializer {
+public class GatewayApplication   {
 
     private static final Logger log = LoggerFactory.getLogger(GatewayApplication.class);
 
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        // TODO Auto-generated method stub
-        return builder.sources(GatewayApplication.class);
-    }
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//        // TODO Auto-generated method stub
+//        return builder.sources(GatewayApplication.class);
+//    }
 
 
     @Component

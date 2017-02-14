@@ -22,10 +22,10 @@ public class ZuulConfiguration {
         log.info("starting ZuulServlet");
         ServletRegistrationBean servlet = new ServletRegistrationBean(new ZuulServlet());
         servlet.addUrlMappings("/api/*");
-        servlet.addUrlMappings("/*");
+        //servlet.addUrlMappings("/*");
         servlet.addInitParameter("buffer-requests","true");
         servlet.setAsyncSupported(true);
-        servlet.setLoadOnStartup(1);
+       // servlet.setLoadOnStartup(1);
         return servlet;
     }
 
@@ -33,7 +33,7 @@ public class ZuulConfiguration {
     public FilterRegistrationBean contextLifecycleFilter() {
         log.info("starting contextLifecycleFilter");
         FilterRegistrationBean filter = new FilterRegistrationBean(new ContextLifecycleFilter());
-        filter.addUrlPatterns("/*");
+        filter.addUrlPatterns("/api/*");
         return filter;
     }
 
