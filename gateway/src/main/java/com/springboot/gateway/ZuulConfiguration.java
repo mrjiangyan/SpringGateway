@@ -21,21 +21,19 @@ public class ZuulConfiguration {
     public ServletRegistrationBean getZuulServlet() {
         log.info("starting ZuulServlet");
         ServletRegistrationBean servlet = new ServletRegistrationBean(new ZuulServlet());
-        //servlet.getUrlMappings().clear();
         servlet.addUrlMappings("/*");
         //servlet.setAsyncSupported(true);
         //servlet.setLoadOnStartup(1);
         return servlet;
     }
 
-    @Bean
-    public FilterRegistrationBean contextLifecycleFilter() {
-        log.info("starting contextLifecycleFilter");
-        FilterRegistrationBean filter = new FilterRegistrationBean(new ContextLifecycleFilter());
-        filter.addUrlPatterns("/*");
-        //filter.addServletRegistrationBeans(slspServlet());
-        return filter;
-    }
+//    @Bean
+//    public FilterRegistrationBean contextLifecycleFilter() {
+//        log.info("starting contextLifecycleFilter");
+//        FilterRegistrationBean filter = new FilterRegistrationBean(new ContextLifecycleFilter());
+//        filter.addUrlPatterns("/*");
+//        return filter;
+//    }
 
 
 

@@ -47,8 +47,19 @@ war {
     }
 }
 
-jettyRun.contextPath = '/'
+defaultTasks 'jettyRun'
+
+//jettyRun.contextPath = '/'
 
 jettyRun.doFirst {
     System.setProperty("zuul.filter.root", "src/main/groovy/filters")
+}
+
+jettyRun{
+    webAppSourceDirectory file("$projectDir/src/main/webapp")
+    httpPort 8080
+    contextPath = '/'
+    //contextPath project.name
+    scanIntervalSeconds 0
+    reload "automatic"
 }

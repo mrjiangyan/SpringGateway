@@ -13,8 +13,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import java.io.File;
@@ -25,12 +28,19 @@ import java.net.UnknownHostException;
  * Created by Steven on 2017/2/13.
  */
 @SpringBootApplication
-@EnableZuulProxy
+//@EnableZuulProxy
 @ComponentScan
-@EnableAutoConfiguration
-public class GatewayApplication  {
+@Configuration
+public class GatewayApplication  extends SpringBootServletInitializer {
 
     private static final Logger log = LoggerFactory.getLogger(GatewayApplication.class);
+
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        // TODO Auto-generated method stub
+        return builder.sources(GatewayApplication.class);
+    }
 
 
     @Component
