@@ -30,7 +30,6 @@ public class GroovyInitRunner implements CommandLineRunner {
 
 
     public void run(String... args) throws Exception {
-        log.info("starting GroovyInitRunner");
         MonitoringHelper.initMocks();
         initGroovyFilterManagerFromDB();
     }
@@ -45,7 +44,6 @@ public class GroovyInitRunner implements CommandLineRunner {
         poller = new Thread("GroovyFilterFileManagerPoller") {
             public void run() {
                 while (bRunning) {
-                    log.info("running poller");
                     try {
                         sleep(pollingIntervalSeconds * 1000);
                         manageFiles();
@@ -77,18 +75,17 @@ public class GroovyInitRunner implements CommandLineRunner {
     }
 
     private void initGroovyFilterManagerFromDB() {
-        FilterLoader instance = FilterLoader.getInstance();
-        instance.setCompiler(new GroovyCompiler());
-
         manageFiles();
         startPoller();
+        FilterLoader instance = FilterLoader.getInstance();
+        instance.setCompiler(new GroovyCompiler());
         try {
             FilterFileManager.setFilenameFilter(new GroovyFileFilter());
             FilterFileManager.init(pollingIntervalSeconds, scriptRoot);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //启动一个线程去动态的刷新文件
+
 
     }
 
@@ -97,27 +94,31 @@ public class GroovyInitRunner implements CommandLineRunner {
         if (!root.exists())
             root.mkdir();
         scriptRoot = root.getName() + File.separator;
-
-        for (GroovyScript script : scriptMapper.getAll()) {
+        GroovyScript[] array=scriptMapper.getAll();
+        for (GroovyScript script : array) {
             try {
-                File temp = new File(scriptRoot, script.getScriptName() + ".groovy");
+                File scriptFile = new File(scriptRoot, script.getScriptName() + ".groovy");
+                //如果该脚本被设置为无效，则需要从本地进行清理
                 if(!script.isActive())
                 {
-                    temp.delete();
+                    scriptFile.delete();
                     continue;
                 }
-                log.info(temp.getAbsolutePath());
-                // 向临时文件中写入内容
-                BufferedWriter out = new BufferedWriter(new FileWriter(temp));
-                out.write(script.getScript());
-                out.close();
+                //此处的逻辑基于文件的修改日期没有发生过变化则，则不在保存该文件 提升更新效率
+                if(scriptFile.exists() && scriptFile.lastModified() == script.getLastUpdateTime().getTime())
+                    continue;
+                log.info(scriptFile.getAbsolutePath());
 
-                //instance.putFilter(temp);
+                //向文件中写入内容
+                BufferedWriter out = new BufferedWriter(new FileWriter(scriptFile));
+                out.write(script.getScript());
+                out.flush();
+                out.close();
+                scriptFile.setLastModified(script.getLastUpdateTime().getTime());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        System.gc();
         if (scriptRoot.length() > 0) scriptRoot = scriptRoot + File.separator;
 
     }
