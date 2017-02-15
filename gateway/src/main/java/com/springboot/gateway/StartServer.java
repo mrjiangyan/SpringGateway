@@ -14,19 +14,24 @@
  *      limitations under the License.
  */
 
-package com.netflix.zuul;
+package com.springboot.gateway;
 
+import com.netflix.zuul.FilterFileManager;
+import com.netflix.zuul.FilterLoader;
+import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.filters.FilterRegistry;
 import com.netflix.zuul.groovy.GroovyCompiler;
 import com.netflix.zuul.groovy.GroovyFileFilter;
 import com.netflix.zuul.monitoring.MonitoringHelper;
-import java.io.File;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import java.io.File;
+
+//@WebListener
 public class StartServer implements ServletContextListener {
 
     private static final Logger logger = LoggerFactory.getLogger(StartServer.class);
@@ -40,9 +45,8 @@ public class StartServer implements ServletContextListener {
 
         // initializes groovy filesystem poller
         initGroovyFilterManager();
-
         // initializes a few java filter examples
-        initJavaFilters();
+        //initJavaFilters();
     }
 
     @Override
@@ -53,7 +57,7 @@ public class StartServer implements ServletContextListener {
     private void initGroovyFilterManager() {
         FilterLoader.getInstance().setCompiler(new GroovyCompiler());
 
-        String scriptRoot = System.getProperty("zuul.filter.root", "");
+        String scriptRoot = System.getProperty("zuul.filter.root", "gateway/src/main/groovy/filters");
         if (scriptRoot.length() > 0) scriptRoot = scriptRoot + File.separator;
         try {
             FilterFileManager.setFilenameFilter(new GroovyFileFilter());
@@ -62,6 +66,8 @@ public class StartServer implements ServletContextListener {
             throw new RuntimeException(e);
         }
     }
+
+
 
     private void initJavaFilters() {
         final FilterRegistry r = FilterRegistry.instance();

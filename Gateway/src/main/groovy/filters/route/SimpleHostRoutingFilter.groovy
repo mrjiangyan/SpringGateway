@@ -68,7 +68,8 @@ class SimpleHostRoutingFilter extends ZuulFilter {
     private static final DynamicIntProperty CONNECTION_TIMEOUT =
             DynamicPropertyFactory.getInstance().getIntProperty(ZuulConstants.ZUUL_HOST_CONNECT_TIMEOUT_MILLIS, 2000)
 
-    private static final AtomicReference<CloseableHttpClient> CLIENT = new AtomicReference<CloseableHttpClient>(newClient());
+    private static
+    final AtomicReference<CloseableHttpClient> CLIENT = new AtomicReference<CloseableHttpClient>(newClient());
 
     private static final Timer CONNECTION_MANAGER_TIMER = new Timer(true);
 
@@ -97,7 +98,7 @@ class SimpleHostRoutingFilter extends ZuulFilter {
     private static final HttpClientConnectionManager newConnectionManager() {
         SSLContext sslContext = SSLContexts.createSystemDefault();
 
-        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
                 .register("http", PlainConnectionSocketFactory.INSTANCE)
                 .register("https", new SSLConnectionSocketFactory(sslContext))
                 .build();
@@ -263,7 +264,7 @@ class SimpleHostRoutingFilter extends ZuulFilter {
             }
 
             if (keyPair.contains("=")) {
-                def (name,value) = keyPair.split("=", 2)
+                def (name, value) = keyPair.split("=", 2)
                 value = URLDecoder.decode(value, encoding)
                 value = new URI(null, null, null, value, null).toString().substring(1)
                 value = value.replaceAll('&', '%26')
@@ -342,7 +343,7 @@ class SimpleHostRoutingFilter extends ZuulFilter {
     }
 
 
-     String getVerb(HttpServletRequest request) {
+    String getVerb(HttpServletRequest request) {
         return getVerb(request.getMethod().toUpperCase());
     }
 

@@ -20,6 +20,7 @@ import com.netflix.zuul.context.Debug
 import com.netflix.zuul.context.RequestContext
 
 import javax.servlet.http.HttpServletRequest
+
 /**
  * @author Mikey Cohen
  * Date: 3/12/12
