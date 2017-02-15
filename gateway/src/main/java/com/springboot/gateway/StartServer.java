@@ -44,8 +44,7 @@ public class StartServer implements ServletContextListener {
         MonitoringHelper.initMocks();
 
         // initializes groovy filesystem poller
-        //initGroovyFilterManager();
-        //initGroovyFilterManagerFromDB();
+        initGroovyFilterManager();
         // initializes a few java filter examples
         //initJavaFilters();
     }

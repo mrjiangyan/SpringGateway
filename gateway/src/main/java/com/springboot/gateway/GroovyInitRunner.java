@@ -23,7 +23,6 @@ import java.io.FileWriter;
 @Component
 public class GroovyInitRunner implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(GroovyInitRunner.class);
-    static GroovyInitRunner INSTANCE;
 
     Thread poller;
     boolean bRunning = true;
@@ -31,7 +30,6 @@ public class GroovyInitRunner implements CommandLineRunner {
 
 
     public void run(String... args) throws Exception {
-        INSTANCE =this;
         log.info("starting GroovyInitRunner");
         MonitoringHelper.initMocks();
         initGroovyFilterManagerFromDB();
@@ -109,17 +107,17 @@ public class GroovyInitRunner implements CommandLineRunner {
                     continue;
                 }
                 log.info(temp.getAbsolutePath());
-                //在程序退出时删除临时文件
-                temp.deleteOnExit();
                 // 向临时文件中写入内容
                 BufferedWriter out = new BufferedWriter(new FileWriter(temp));
                 out.write(script.getScript());
                 out.close();
+
                 //instance.putFilter(temp);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        System.gc();
         if (scriptRoot.length() > 0) scriptRoot = scriptRoot + File.separator;
 
     }
