@@ -23,27 +23,31 @@ import java.io.FileWriter;
 @Component
 public class GroovyInitRunner implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(GroovyInitRunner.class);
-
+    static GroovyInitRunner INSTANCE;
 
     Thread poller;
     boolean bRunning = true;
-    int pollingIntervalSeconds = 20;
+    int pollingIntervalSeconds = 30;
 
-    @Override
+
     public void run(String... args) throws Exception {
+        INSTANCE =this;
         log.info("starting GroovyInitRunner");
         MonitoringHelper.initMocks();
         initGroovyFilterManagerFromDB();
     }
+
 
     void stopPoller() {
         bRunning = false;
     }
 
     void startPoller() {
+
         poller = new Thread("GroovyFilterFileManagerPoller") {
             public void run() {
                 while (bRunning) {
+                    log.info("running poller");
                     try {
                         sleep(pollingIntervalSeconds * 1000);
                         manageFiles();
@@ -59,6 +63,7 @@ public class GroovyInitRunner implements CommandLineRunner {
 
     @Autowired
     GroovyScriptMapper scriptMapper;
+    private String scriptRoot;
 
     private void initGroovyFilterManager() {
         FilterLoader.getInstance().setCompiler(new GroovyCompiler());
@@ -76,14 +81,20 @@ public class GroovyInitRunner implements CommandLineRunner {
     private void initGroovyFilterManagerFromDB() {
         FilterLoader instance = FilterLoader.getInstance();
         instance.setCompiler(new GroovyCompiler());
+
         manageFiles();
         startPoller();
+        try {
+            FilterFileManager.setFilenameFilter(new GroovyFileFilter());
+            FilterFileManager.init(pollingIntervalSeconds, scriptRoot);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //启动一个线程去动态的刷新文件
 
     }
 
     private void manageFiles() {
-        String scriptRoot = "";
         File root = new File("script");
         if (!root.exists())
             root.mkdir();
@@ -92,6 +103,11 @@ public class GroovyInitRunner implements CommandLineRunner {
         for (GroovyScript script : scriptMapper.getAll()) {
             try {
                 File temp = new File(scriptRoot, script.getScriptName() + ".groovy");
+                if(!script.isActive())
+                {
+                    temp.delete();
+                    continue;
+                }
                 log.info(temp.getAbsolutePath());
                 //在程序退出时删除临时文件
                 temp.deleteOnExit();
@@ -105,11 +121,6 @@ public class GroovyInitRunner implements CommandLineRunner {
             }
         }
         if (scriptRoot.length() > 0) scriptRoot = scriptRoot + File.separator;
-        try {
-            FilterFileManager.setFilenameFilter(new GroovyFileFilter());
-            FilterFileManager.init(pollingIntervalSeconds, scriptRoot);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
     }
 }
