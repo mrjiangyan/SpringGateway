@@ -106,7 +106,7 @@ class SimpleHostRoutingFilter extends ZuulFilter {
         HttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
         cm.setMaxTotal(Integer.parseInt(System.getProperty("zuul.max.host.connections", "200")));
         cm.setDefaultMaxPerRoute(Integer.parseInt(System.getProperty("zuul.max.host.connections", "20")));
-        return cm;
+        return cm
     }
 
     @Override

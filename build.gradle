@@ -4,6 +4,7 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        mavenLocal()
         jcenter()
     }
     dependencies {
@@ -32,10 +33,20 @@ configurations.all {
     exclude group: 'asm', module: 'asm-all'
 }
 
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Dalston.BUILD-SNAPSHOT"
+    }
+}
+
+
 subprojects {
     apply plugin: 'nebula.netflixoss'
     apply plugin: 'java'
     apply plugin: 'nebula.provided-base'
+    apply plugin: 'war'
+
 
     repositories {
         jcenter()

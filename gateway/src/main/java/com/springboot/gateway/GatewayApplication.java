@@ -1,15 +1,23 @@
 package com.springboot.gateway;
 
+import groovy.util.logging.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 
 /**
@@ -17,8 +25,10 @@ import java.net.UnknownHostException;
  */
 @SpringBootApplication
 @MapperScan("com.spring.gateway.persistent")
+@EnableCircuitBreaker
 @ComponentScan
 @Configuration
+@Slf4j
 public class GatewayApplication {
 
     private static final Logger log = LoggerFactory.getLogger(GatewayApplication.class);
