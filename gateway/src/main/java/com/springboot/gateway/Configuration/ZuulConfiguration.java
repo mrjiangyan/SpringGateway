@@ -1,5 +1,6 @@
 package com.springboot.gateway.Configuration;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.zuul.context.ContextLifecycleFilter;
 import com.netflix.zuul.http.ZuulServlet;
 import org.slf4j.Logger;
