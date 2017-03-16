@@ -5,8 +5,19 @@ spring:
         username: root
         password: p@ssw0rd
         driver-class-name: com.mysql.jdbc.Driver
+management:
+  security:
+    enabled: false
 
 
 #mybatis:
 #  mapperLocations: classpath:mapper/*.xml
 #  typeAliasesPackage: com.spring.gateway.persistent
+
+
+
+
+
+
+
+#hystrix

@@ -97,15 +97,15 @@ public class GroovyInitRunner implements CommandLineRunner {
         GroovyScript[] array=scriptMapper.getAll();
         for (GroovyScript script : array) {
             try {
-                File scriptFile = new File(scriptRoot, script.getScriptName() + ".groovy");
+                File scriptFile = new File(scriptRoot, script.getScript_name() + ".groovy");
                 //如果该脚本被设置为无效，则需要从本地进行清理
-                if(!script.isActive())
+                if(!script.is_active())
                 {
                     scriptFile.delete();
                     continue;
                 }
                 //此处的逻辑基于文件的修改日期没有发生过变化则，则不在保存该文件 提升更新效率
-                if(scriptFile.exists() && scriptFile.lastModified() == script.getLastUpdateTime().getTime())
+                if(scriptFile.exists() && scriptFile.lastModified() == script.getLast_update_time().getTime())
                     continue;
                 log.info(scriptFile.getAbsolutePath());
 
@@ -114,7 +114,7 @@ public class GroovyInitRunner implements CommandLineRunner {
                 out.write(script.getScript());
                 out.flush();
                 out.close();
-                scriptFile.setLastModified(script.getLastUpdateTime().getTime());
+                scriptFile.setLastModified(script.getLast_update_time().getTime());
             } catch (Exception e) {
                 e.printStackTrace();
             }
