@@ -1,4 +1,4 @@
-package com.springboot.gateway.Configuration;
+package com.springboot.gateway.configuration;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,4 +1,4 @@
-package com.springboot.gateway.Metric;
+package com.springboot.gateway.metric;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.metrics.CounterService;
