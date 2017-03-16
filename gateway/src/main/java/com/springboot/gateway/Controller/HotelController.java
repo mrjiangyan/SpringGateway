@@ -14,11 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HotelController {
 
     @RequestMapping(method = RequestMethod.GET, name = "register")
-    @HystrixCommand(fallbackMethod = "stubMyService",
-    commandProperties = {
-        @HystrixProperty(name="execution.isolation.strategy", value="SEMAPHORE")
-    }
-    )
+    @HystrixCommand
     public String Register()
     {
         return "123";
